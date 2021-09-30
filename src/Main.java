@@ -1,4 +1,6 @@
 import functions.FunctionPoint;
+import functions.FunctionPointIndexOutOfBoundsException;
+import functions.InappropriateFunctionPointException;
 import functions.TabulatedFunction;
 
 public class Main {
@@ -14,12 +16,21 @@ public class Main {
             graph.setPointY(i, - (graph.getPointX(i) - 4)*(graph.getPointX(i) - 4) + 5);
         }
 
-        FunctionPoint p = new FunctionPoint(-1, 228);
+        FunctionPoint p = new FunctionPoint(5.1, 228);
         //graph.addPoint(p);
-        graph.deletePoint(3);
-        graph.deletePoint(2);
-        graph.deletePoint(2);
-        graph.addPoint(p);
+        try {
+            graph.deletePoint(3);
+            graph.addPoint(p);
+        }
+        catch(FunctionPointIndexOutOfBoundsException error1){
+            //error1.printStackTrace();
+            System.out.println("1error");
+        }
+        catch (InappropriateFunctionPointException error2) {
+            System.out.println("2error");
+            //error2.printStackTrace();
+        }
+
         System.out.println(graph.getPointsCount());
         System.out.println(graph.maxCountElem());
         for (int i = 0; i < graph.getPointsCount(); ++i){
