@@ -1,8 +1,15 @@
 package functions;
 
 public class FunctionPoint {
-    protected double x;
-    protected double y;
+    private double x;
+    private double y;
+
+    public double getX(){return x; }
+    public double getY(){return y; }
+
+    public void setX(double xTemp){ x = xTemp; }
+    public void setY(double yTemp){ y = yTemp; }
+
 
     public FunctionPoint(double x, double y){
         this.x = x;

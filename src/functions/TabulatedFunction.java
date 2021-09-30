@@ -1,11 +1,10 @@
 package functions;
-import java.lang.*;
 
 public class TabulatedFunction {
     private FunctionPoint[] points;
     private int countPoints;
 
-    public int maxCountElem(){return points.length;}; //Сколько с запасом влезет элементов в данный массив
+    public int maxCountElem(){return points.length;} //Сколько с запасом влезет элементов в данный массив
 
     public TabulatedFunction(double leftX, double rightX, int pointsCount) throws IllegalArgumentException{
         if ((pointsCount < 2) || (leftX >= rightX)) throw new IllegalArgumentException();
@@ -27,18 +26,18 @@ public class TabulatedFunction {
         }
     }
 
-    public double getLeftDomainBorder(){ return this.points[0].x;}
-    public double getRightDomainBorder(){ return this.points[countPoints - 1].x;}
+    public double getLeftDomainBorder(){ return points[0].getX();}
+    public double getRightDomainBorder(){ return points[countPoints - 1].getX();}
     public double getFunctionValue(double x){
-        if ((x < points[0].x) || (x > points[countPoints - 1].x)){ return Double.NaN;}
+        if ((x < points[0].getX()) || (x > points[countPoints - 1].getX())){ return Double.NaN;}
         int index = -1;
         for (int i = 0; i < countPoints - 1; ++i){
-            if ((x >= points[i].x) && (x <= points[i + 1].x)){
+            if ((x >= points[i].getX()) && (x <= points[i + 1].getX())){
                 index = i;
                 break;
             }
         }
-        return points[index].y + (points[index + 1].y - points[index].y)*(x - points[index].x)/(points[index + 1].x - points[index].x);
+        return points[index].getY() + (points[index + 1].getY() - points[index].getY())*(x - points[index].getX())/(points[index + 1].getX() - points[index].getX());
     }
 
 
@@ -51,41 +50,41 @@ public class TabulatedFunction {
     public void setPoint(int index, FunctionPoint point) throws FunctionPointIndexOutOfBoundsException, InappropriateFunctionPointException{
         if ((index < 0) || (index >= countPoints)) { throw new FunctionPointIndexOutOfBoundsException();}
 
-        if ((index == 0) && (point.x < points[1].x)){
+        if ((index == 0) && (point.getX() < points[1].getX())){
             points[0] = point;
-        }else if ((index == countPoints - 1) && (point.x > points[countPoints - 2].x)){
+        }else if ((index == countPoints - 1) && (point.getX() > points[countPoints - 2].getX())){
             points[countPoints - 1] = point;
         }else{
-            if ((point.x > points[index - 1].x) && (point.x < points[index + 1].x)) { throw new InappropriateFunctionPointException();}
+            if ((point.getX() > points[index - 1].getX()) && (point.getX() < points[index + 1].getX())) { throw new InappropriateFunctionPointException();}
             points[index] = point;
         }
     }
 
     public double getPointX(int index) throws FunctionPointIndexOutOfBoundsException{
         if ((index < 0) || (index >= countPoints)) { throw new FunctionPointIndexOutOfBoundsException();}
-        return points[index].x;
+        return points[index].getX();
     }
 
     public void setPointX(int index, double x) throws FunctionPointIndexOutOfBoundsException, InappropriateFunctionPointException{
         if ((index < 0) || (index >= countPoints)) { throw new FunctionPointIndexOutOfBoundsException();}
 
-        if ((index == 0) && (x < points[1].x)){
-            points[0].x = x;
-        }else if ((index == countPoints - 1) && (x > points[countPoints - 2].x)){
-            points[countPoints - 1].x = x;
+        if ((index == 0) && (x < points[1].getX())){
+            points[0].setX(x);
+        }else if ((index == countPoints - 1) && (x > points[countPoints - 2].getX())){
+            points[countPoints - 1].setX(x);
         }else{
-            if ((x > points[index - 1].x) && (x < points[index + 1].x)) { throw new InappropriateFunctionPointException();}
-            points[index].x = x;
+            if ((x > points[index - 1].getX()) && (x < points[index + 1].getX())) { throw new InappropriateFunctionPointException();}
+            points[index].setX(x);
         }
     }
 
     public double getPointY(int index) throws FunctionPointIndexOutOfBoundsException{
         if ((index < 0) || (index >= countPoints)) { throw new FunctionPointIndexOutOfBoundsException();}
-        return points[index].y;
+        return points[index].getY();
     }
     public void setPointY(int index, double y) throws FunctionPointIndexOutOfBoundsException{
         if ((index < 0) || (index >= countPoints)) { throw new FunctionPointIndexOutOfBoundsException();}
-        points[index].y = y;
+        points[index].setY(y);
     }
 
     public void deletePoint(int index) throws FunctionPointIndexOutOfBoundsException, InappropriateFunctionPointException{
@@ -102,22 +101,11 @@ public class TabulatedFunction {
     }
 
     public void addPoint(FunctionPoint point) throws InappropriateFunctionPointException{
-        int left = 0;
-        int right = countPoints - 1;
-        int mid = -1;
-        while (left < right){
-            mid = (left + right) / 2;
-            if (point.x == points[mid].x) throw new InappropriateFunctionPointException();
-            if (point.x < points[mid].x){
-                right = mid - 1;
-            }else{
-                left = mid + 1;
-            }
-            System.out.print(left);
-            System.out.println(right);
-        }
+        int indexForAdd = 0;
+        for (int i = 0; i < countPoints; ++i) if (points[i].getX() < point.getX()) indexForAdd = i + 1; // Куда вставить элемент?
 
-        int indexForAdd = right;
+        if ((indexForAdd != countPoints) && (points[indexForAdd].getX() == point.getX())){ throw new InappropriateFunctionPointException();}
+
         ++countPoints;
         if (countPoints > points.length){
             FunctionPoint[] temp = new FunctionPoint[2 * points.length];

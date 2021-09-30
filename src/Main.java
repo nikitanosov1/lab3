@@ -1,7 +1,4 @@
-import functions.FunctionPoint;
-import functions.FunctionPointIndexOutOfBoundsException;
-import functions.InappropriateFunctionPointException;
-import functions.TabulatedFunction;
+import functions.*;
 
 public class Main {
     public static void main(String[] args){
@@ -17,18 +14,17 @@ public class Main {
         }
 
         FunctionPoint p = new FunctionPoint(5.1, 228);
-        //graph.addPoint(p);
+
         try {
             graph.deletePoint(3);
-            graph.addPoint(p);
+            graph.deletePoint(0);
+
         }
         catch(FunctionPointIndexOutOfBoundsException error1){
-            //error1.printStackTrace();
-            System.out.println("1error");
+            error1.printStackTrace();
         }
         catch (InappropriateFunctionPointException error2) {
-            System.out.println("2error");
-            //error2.printStackTrace();
+            error2.printStackTrace();
         }
 
         System.out.println(graph.getPointsCount());
