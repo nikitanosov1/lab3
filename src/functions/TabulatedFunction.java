@@ -1,10 +1,15 @@
 package functions;
 
 public class TabulatedFunction {
-    private FunctionPoint[] points;
-    private int countPoints;
+    protected FunctionPoint[] points;
+    protected int countPoints;
 
-    public int maxCountElem(){return points.length;} //Сколько с запасом влезет элементов в данный массив
+
+    public TabulatedFunction(){
+        points = null;
+        countPoints = 0;
+    }
+
 
     public TabulatedFunction(double leftX, double rightX, int pointsCount) throws IllegalArgumentException{
         if ((pointsCount < 2) || (leftX >= rightX)) throw new IllegalArgumentException();
@@ -25,6 +30,8 @@ public class TabulatedFunction {
             points[i] = new FunctionPoint(leftX + i * interval, values[i]);
         }
     }
+
+    public int maxCountElem(){return points.length;} //Сколько с запасом влезет элементов в данный массив
 
     public double getLeftDomainBorder(){ return points[0].getX();}
     public double getRightDomainBorder(){ return points[countPoints - 1].getX();}
