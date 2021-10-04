@@ -11,7 +11,7 @@ public class TabulatedFunction {
     }
 
 
-    public TabulatedFunction(double leftX, double rightX, int pointsCount) throws IllegalArgumentException{
+    public TabulatedFunction(double leftX, double rightX, int pointsCount) throws IllegalArgumentException{ // Перенёс
         if ((pointsCount < 2) || (leftX >= rightX)) throw new IllegalArgumentException();
         countPoints = pointsCount;
         points = new FunctionPoint[pointsCount];
@@ -21,7 +21,7 @@ public class TabulatedFunction {
         }
     }
 
-    public TabulatedFunction(double leftX, double rightX, double[] values) throws IllegalArgumentException{
+    public TabulatedFunction(double leftX, double rightX, double[] values) throws IllegalArgumentException{// Перенёс
         if ((values.length < 2) || (leftX >= rightX)) throw new IllegalArgumentException();
         countPoints = values.length;
         points = new FunctionPoint[values.length];
@@ -31,11 +31,11 @@ public class TabulatedFunction {
         }
     }
 
-    public int maxCountElem(){return points.length;} //Сколько с запасом влезет элементов в данный массив
+    public int maxCountElem(){return points.length;} //Сколько с запасом влезет элементов в данный массив (не по заданию, для отладки)
 
-    public double getLeftDomainBorder(){ return points[0].getX();}
-    public double getRightDomainBorder(){ return points[countPoints - 1].getX();}
-    public double getFunctionValue(double x){
+    public double getLeftDomainBorder(){ return points[0].getX();}// Перенёс
+    public double getRightDomainBorder(){ return points[countPoints - 1].getX();}// Перенёс
+    public double getFunctionValue(double x){// Перенёс
         if ((x < points[0].getX()) || (x > points[countPoints - 1].getX())){ return Double.NaN;}
         int index = -1;
         for (int i = 0; i < countPoints - 1; ++i){
@@ -48,8 +48,8 @@ public class TabulatedFunction {
     }
 
 
-    public int getPointsCount(){ return countPoints;}
-    public FunctionPoint getPoint(int index) throws FunctionPointIndexOutOfBoundsException{
+    public int getPointsCount(){ return countPoints;}// Перенёс
+    public FunctionPoint getPoint(int index) throws FunctionPointIndexOutOfBoundsException{// Перенёс
         if ((index < 0) || (index >= countPoints)) { throw new FunctionPointIndexOutOfBoundsException();}
         return points[index];
     }

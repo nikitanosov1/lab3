@@ -6,7 +6,8 @@ public class Main {
         final double left = 0.0;
         final double right = 10.0;
 
-        LinkedListTabulatedFunction linkedList = new LinkedListTabulatedFunction();
+        LinkedListTabulatedFunction linkedList = new LinkedListTabulatedFunction(left, right, countPoints);
+
         //linkedList.addNodeToTail();
         //System.out.println(linkedList.getNodeByIndex(0));
         //System.out.println(linkedList.getNodeByIndex(1));
