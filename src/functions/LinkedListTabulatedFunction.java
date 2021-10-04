@@ -1,6 +1,6 @@
 package functions;
 
-public class LinkedListTabulatedFunction{
+public class LinkedListTabulatedFunction implements TabulatedFunction{
     private int countPoints;
     private FunctionNode head;
     private FunctionNode lastHistoryNode;
@@ -14,7 +14,6 @@ public class LinkedListTabulatedFunction{
     }
     public LinkedListTabulatedFunction(double leftX, double rightX, int pointsCount) throws IllegalArgumentException{
         if ((pointsCount < 2) || (leftX >= rightX)) throw new IllegalArgumentException();
-        countPoints = pointsCount;
         head = new FunctionNode();
         double interval = (rightX - leftX)/(pointsCount - 1);
         for (int i = 0; i < pointsCount; ++i) {
@@ -24,7 +23,6 @@ public class LinkedListTabulatedFunction{
     }
     public LinkedListTabulatedFunction(double leftX, double rightX, double[] values) throws IllegalArgumentException{
         if ((values.length < 2) || (leftX >= rightX)) throw new IllegalArgumentException();
-        countPoints = values.length;
         head = new FunctionNode();
         double interval = (rightX - leftX)/(values.length - 1);
         for (int i = 0; i < values.length; ++i) {
@@ -92,9 +90,12 @@ public class LinkedListTabulatedFunction{
         FunctionNode nodeToDelete = getNodeByIndex(index);
         nodeToDelete.prevFunctionNode.nextFunctionNode = nodeToDelete.nextFunctionNode;
         nodeToDelete.nextFunctionNode.prevFunctionNode = nodeToDelete.prevFunctionNode;
+
+        indexOfLastHistoryNode = 0;
+        lastHistoryNode = head.nextFunctionNode;
         --countPoints;
     }
-    public void addPoint(FunctionPoint point) throws InappropriateFunctionPointException {
+    public void addPoint(FunctionPoint point) throws InappropriateFunctionPointException  {
         int indexForAdd = 0;
         for (int i = 0; i < countPoints; ++i)
             if (getNodeByIndex(i).point.getX() < point.getX()) indexForAdd = i + 1; // Куда вставить элемент?
@@ -108,6 +109,9 @@ public class LinkedListTabulatedFunction{
         nodeToAdd.prevFunctionNode = getNodeByIndex(indexForAdd - 1);
         getNodeByIndex(indexForAdd).prevFunctionNode = nodeToAdd;
         getNodeByIndex(indexForAdd - 1).nextFunctionNode = nodeToAdd;
+
+        indexOfLastHistoryNode = countPoints;
+        lastHistoryNode = nodeToAdd;
         ++countPoints;
     }
 
