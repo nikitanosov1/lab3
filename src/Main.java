@@ -6,6 +6,11 @@ public class Main {
         final double left = 0.0;
         final double right = 10.0;
 
+        LinkedListTabulatedFunction linkedList = new LinkedListTabulatedFunction();
+        //linkedList.addNodeToTail();
+        //System.out.println(linkedList.getNodeByIndex(0));
+        //System.out.println(linkedList.getNodeByIndex(1));
+        /*
         TabulatedFunction graph;
         graph = new TabulatedFunction(left, right, countPoints);
 
@@ -46,6 +51,6 @@ public class Main {
             System.out.print("           y value: ");
             System.out.println(graph.getFunctionValue(left + i * interval));
         }
-
+        */
     }
 }
